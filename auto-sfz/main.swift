@@ -27,8 +27,7 @@ class Group {
     }
 }
 
-extension Group: Entry {
-    
+extension Group: Entry { 
     var string: String {
         return "<group>\n"
     }
@@ -37,7 +36,13 @@ extension Group: Entry {
 class Region {
     var file: File!
     var key: Int {
-        return Note.note(input: file.name).number
+        let components = file.name.split(separator: "_")
+        for component in components {
+            if let note = Note.note(input: String(component)) {
+                return note.number
+            }
+        }
+        return -1
     }
     var codes = [OpCode]()
     
@@ -65,7 +70,7 @@ extension Region: Entry {
     }
 }
 
-var debug = false
+var debug = true
 var rootPath = "/Users/chrismaier/Dropbox/test_folder"
 
 if !debug {

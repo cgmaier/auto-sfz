@@ -7,16 +7,19 @@
 //
  
 enum Note {
-    static func note(input: String) -> Note {
+    static func note(input: String) -> Note? {
+        
         var iterator: String = input
-        var noteName: String = String(iterator.first ?? "X")
+        guard let first = iterator.first else { return nil }
+        var noteName: String = String(first)
         iterator.removeFirst()
         if iterator.first == "#" {
             noteName.append("#")
             iterator.removeFirst()
         }
+        guard let octave_char = iterator.first else { return nil }
+        guard let octave: Int = Int(String(octave_char)) else { return nil }
         
-        let octave: Int = Int(String(iterator.first  ?? "X")) ?? 0
         switch noteName {
         case "C": return C(octave)
         case "C#": return C_sharp(octave)
@@ -33,6 +36,8 @@ enum Note {
         default: return C(100)
         }
     }
+    
+    static let all =  [C(0), D(0), E(0), F(0), G(0), A(0), B(0)]
     
     case C(_ octave: Int)
     case C_sharp(_ octave: Int)
