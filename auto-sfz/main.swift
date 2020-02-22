@@ -19,14 +19,16 @@ class Group {
     
     func orderRegions() {
         self.regions = regions.sorted(by: { $0.key < $1.key })
+        self.regions.first?.stretchTo(0)
         for (i, region) in self.regions.enumerated() {
-            guard i+1 < self.regions.count else { return }
-            self.regions[i+1].stretchTo(region)
+            guard i+1 < self.regions.count else { break }
+            self.regions[i+1].stretchTo(region.key)
         }
     }
 }
 
 extension Group: Entry {
+    
     var string: String {
         return "<group>\n"
     }
@@ -39,10 +41,15 @@ class Region {
     }
     var codes = [OpCode]()
     
-    func stretchTo(_ region: Region) {
-        self.codes.append(OpCode.pitch_keycenter(key))
-        self.codes.append(OpCode.hikey(key))
-        self.codes.append(OpCode.lokey(region.key + 1))
+    func stretchTo(_ keyToStretchTo: Int) {
+        let lokey = keyToStretchTo + 1
+        if key == lokey {
+            self.codes.append(OpCode.key(key))
+        } else {
+            self.codes.append(OpCode.pitch_keycenter(key))
+            self.codes.append(OpCode.hikey(key))
+            self.codes.append(OpCode.lokey(keyToStretchTo + 1))
+        }
         self.codes.append(OpCode.sample(file!.parent!.name + "/" + file.name))
     }
 }
@@ -86,9 +93,10 @@ for subfolder in folder.subfolders {
 }
 
 let output = try folder.createFile(named: "files.sfz")
-try output.write("/////// Instrument\n")
+try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")
 // output to the file
 for group in groups {
+    try output.append("\n\n\n//// Group defined by subfolder: \(group.folder!.name)\n")
     try output.append(group.string)
     for region in group.regions {
         try output.append(region.string)
