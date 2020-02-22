@@ -13,7 +13,7 @@ audio file names must start with the note (C, C#, D, D#, E, F, F#, G, G#, A, A#,
 i.e. C1, G#4 etc. 
 <br>
 
-regions are defined to "stretch" downward to cover all midi notes in between their key center and the next lowest provided sample's key center. this script 
+regions are defined to "stretch" downward to cover all midi notes in between their key center and the next lowest provided sample's key center 
 <br>
 
 give it a try by running the compiled executable, or build it yourself in xcode 
