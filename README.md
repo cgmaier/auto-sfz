@@ -9,11 +9,11 @@ for each subfolder in the directory, a group will be defined
 for each audio file in the subfolder, a region will be defined (inside that group)
 <br> 
 
-audio file names must start with the note (C, C#, D, D#, E, F, F#, G, G#, A, A#, B) followed by the octave
-i.e. C1, G#4 etc. 
+audio file names must start with or preceed an underscore with the note name (C, C#, D, D#, E, F, F#, G, G#, A, A#, B) immediately followed by the octave number 
+i.e. C1.wav, flutes_G#4.wav etc. 
 <br>
 
-regions are defined to "stretch" downward to cover all midi notes in between their key center and the next lowest provided sample's key center 
+regions span downward in order to cover all unnacounted-for midi notes between their key center and the next lowest provided region's key center 
 <br>
 
 give it a try by running the compiled executable, or build it yourself in xcode 
@@ -23,7 +23,7 @@ have feedback on how to improve this? feel free to open an issue
 <br>
 
 some ideas 
-- figure out a spec for parsing / defining round robins 
-- parse "meta data" from folder name to define group-level opcodes 
+- figure out how to generate round-robins  
+- parse folder name for group-level opcodes
 
 https://sfzformat.com/
