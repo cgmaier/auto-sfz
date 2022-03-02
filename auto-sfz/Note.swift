@@ -7,8 +7,7 @@
 //
  
 enum Note {
-    static func note(input: String) -> Note? {
-        
+    static func note(input: String) -> Note? { 
         var iterator: String = input
         guard let first = iterator.first else { return nil }
         var noteName: String = String(first)

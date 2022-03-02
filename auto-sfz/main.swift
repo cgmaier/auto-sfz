@@ -8,7 +8,25 @@
 
 import Foundation
 import Files
-   
+import AVFoundation
+
+func safeShell(_ command: String) throws -> String {
+    let task = Process()
+    let pipe = Pipe()
+    
+    task.standardOutput = pipe
+    task.standardError = pipe
+    task.arguments = ["-c", command]
+    task.executableURL = URL(fileURLWithPath: "") //<--updated
+
+    try task.run() //<--updated
+    
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: data, encoding: .utf8)!
+    
+    return output
+}
+ 
 protocol Entry {
     var string: String { get }
 }
@@ -71,7 +89,7 @@ extension Region: Entry {
 }
 
 var debug = true
-var rootPath = "/Users/chrismaier/Dropbox/test_folder"
+var rootPath = "/Users/christophermaier/Dropbox/leftovers/drum-sampling/samples-raw-v1/snare"
 
 if !debug {
     print("Enter the root folder path:")
@@ -92,21 +110,36 @@ for subfolder in folder.subfolders {
     for file in subfolder.files {
         let region = Region()
         region.file = file
+        let url = URL(fileURLWithPath: file.path)
+        if let audioFile = try? AVAudioFile(forReading: url) {
+            print("got the audio file: ",audioFile.length)
+            print("length: \(audioFile.length)")
+            print("peak volume: \(audioFile.peak?.amplitude)")
+            print("average volume:\(audioFile.toAVAudioPCMBuffer()?.rms)" )
+            //print("pitch: \(audioFile.pitch)")
+
+
+        }
+        
         group.regions.append(region)
+        //let output = try! safeShell("sox " + file.name + "-n stat")
+        //print(output)
+        
     }
+    
     group.orderRegions()
 }
-
-let output = try folder.createFile(named: "files.sfz")
-try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")
-// output to the file
-for group in groups {
-    try output.append("\n\n\n//// Group defined by subfolder: \(group.folder!.name)\n")
-    try output.append(group.string)
-    for region in group.regions {
-        try output.append(region.string)
-    }
-}
+//
+//let output = try folder.createFile(named: "files.sfz")
+//try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")
+//// output to the file
+//for group in groups {
+//    try output.append("\n\n\n//// Group defined by subfolder: \(group.folder!.name)\n")
+//    try output.append(group.string)
+//    for region in group.regions {
+//        try output.append(region.string)
+//    }
+//}
 
 exit(1)
 

@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02586AC127CEE2A6004F70AC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC027CEE2A6004F70AC /* Model.swift */; };
+		02586AC627CEF574004F70AC /* AVAudioFile+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */; };
+		02586ACC27CEF5B1004F70AC /* FormatConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC727CEF5B1004F70AC /* FormatConverter.swift */; };
+		02586ACD27CEF5B1004F70AC /* FormatConverter+PCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */; };
+		02586ACE27CEF5B1004F70AC /* FormatConverter+Compressed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC927CEF5B1004F70AC /* FormatConverter+Compressed.swift */; };
+		02586ACF27CEF5B1004F70AC /* FormatConverter+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586ACA27CEF5B1004F70AC /* FormatConverter+Utilities.swift */; };
+		02586AD027CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */; };
+		02586AD327CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */; };
+		02586AD627CEF895004F70AC /* AudioKitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD527CEF895004F70AC /* AudioKitHelpers.swift */; };
 		FD0B47C124019BF200AA607F /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C024019BF200AA607F /* Note.swift */; };
 		FD0B47C324019C3500AA607F /* OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C224019C3500AA607F /* OpCode.swift */; };
 		FD8A47C02400443700842213 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A47BF2400443700842213 /* main.swift */; };
@@ -26,6 +35,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02586AC027CEE2A6004F70AC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		02586AC427CEF131004F70AC /* auto-sfz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "auto-sfz.entitlements"; sourceTree = "<group>"; };
+		02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+Utilities.swift"; sourceTree = "<group>"; };
+		02586AC727CEF5B1004F70AC /* FormatConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatConverter.swift; sourceTree = "<group>"; };
+		02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FormatConverter+PCM.swift"; sourceTree = "<group>"; };
+		02586AC927CEF5B1004F70AC /* FormatConverter+Compressed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FormatConverter+Compressed.swift"; sourceTree = "<group>"; };
+		02586ACA27CEF5B1004F70AC /* FormatConverter+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FormatConverter+Utilities.swift"; sourceTree = "<group>"; };
+		02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Utilities.swift"; sourceTree = "<group>"; };
+		02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Processing.swift"; sourceTree = "<group>"; };
+		02586AD527CEF895004F70AC /* AudioKitHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKitHelpers.swift; sourceTree = "<group>"; };
 		FD0B47C024019BF200AA607F /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FD0B47C224019C3500AA607F /* OpCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpCode.swift; sourceTree = "<group>"; };
 		FD8A47BC2400443700842213 /* auto-sfz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "auto-sfz"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,8 +82,18 @@
 		FD8A47BE2400443700842213 /* auto-sfz */ = {
 			isa = PBXGroup;
 			children = (
+				02586AD527CEF895004F70AC /* AudioKitHelpers.swift */,
+				02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */,
+				02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */,
+				02586AC727CEF5B1004F70AC /* FormatConverter.swift */,
+				02586AC927CEF5B1004F70AC /* FormatConverter+Compressed.swift */,
+				02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */,
+				02586ACA27CEF5B1004F70AC /* FormatConverter+Utilities.swift */,
+				02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */,
+				02586AC427CEF131004F70AC /* auto-sfz.entitlements */,
 				FD8A47BF2400443700842213 /* main.swift */,
 				FD0B47C024019BF200AA607F /* Note.swift */,
+				02586AC027CEE2A6004F70AC /* Model.swift */,
 				FD0B47C224019C3500AA607F /* OpCode.swift */,
 			);
 			path = "auto-sfz";
@@ -100,7 +129,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "Chris Maier";
 				TargetAttributes = {
 					FD8A47BB2400443700842213 = {
@@ -134,9 +163,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02586ACE27CEF5B1004F70AC /* FormatConverter+Compressed.swift in Sources */,
 				FD8A47C02400443700842213 /* main.swift in Sources */,
+				02586AD027CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift in Sources */,
+				02586ACC27CEF5B1004F70AC /* FormatConverter.swift in Sources */,
+				02586ACF27CEF5B1004F70AC /* FormatConverter+Utilities.swift in Sources */,
+				02586AC627CEF574004F70AC /* AVAudioFile+Utilities.swift in Sources */,
 				FD0B47C324019C3500AA607F /* OpCode.swift in Sources */,
+				02586ACD27CEF5B1004F70AC /* FormatConverter+PCM.swift in Sources */,
 				FD0B47C124019BF200AA607F /* Note.swift in Sources */,
+				02586AD627CEF895004F70AC /* AudioKitHelpers.swift in Sources */,
+				02586AD327CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift in Sources */,
+				02586AC127CEE2A6004F70AC /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +207,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -229,6 +268,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -259,9 +299,13 @@
 		FD8A47C42400443700842213 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "auto-sfz/auto-sfz.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U3QNHL8DC7;
+				DEVELOPMENT_TEAM = VA87BGVDRL;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.sfz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -270,9 +314,13 @@
 		FD8A47C52400443700842213 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "auto-sfz/auto-sfz.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U3QNHL8DC7;
+				DEVELOPMENT_TEAM = VA87BGVDRL;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auto.sfz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
