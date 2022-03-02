@@ -10,23 +10,6 @@ import Foundation
 import Files
 import AVFoundation
 
-func safeShell(_ command: String) throws -> String {
-    let task = Process()
-    let pipe = Pipe()
-    
-    task.standardOutput = pipe
-    task.standardError = pipe
-    task.arguments = ["-c", command]
-    task.executableURL = URL(fileURLWithPath: "") //<--updated
-
-    try task.run() //<--updated
-    
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: data, encoding: .utf8)!
-    
-    return output
-}
- 
 protocol Entry {
     var string: String { get }
 }
@@ -102,33 +85,152 @@ if !debug {
 
 let folder = try Folder(path: rootPath)
 var groups = [Group]()
- 
-for subfolder in folder.subfolders {
-    let group = Group()
-    group.folder = folder
-    groups.append(group)
-    for file in subfolder.files {
-        let region = Region()
-        region.file = file
-        let url = URL(fileURLWithPath: file.path)
-        if let audioFile = try? AVAudioFile(forReading: url) {
-            print("got the audio file: ",audioFile.length)
-            print("length: \(audioFile.length)")
-            print("peak volume: \(audioFile.peak?.amplitude)")
-            print("average volume:\(audioFile.toAVAudioPCMBuffer()?.rms)" )
-            //print("pitch: \(audioFile.pitch)")
 
-
-        }
-        
-        group.regions.append(region)
-        //let output = try! safeShell("sox " + file.name + "-n stat")
-        //print(output)
-        
+// represents a region
+class Sample {
+    var file: File
+    
+    var number: Int {
+        let components = file.nameExcludingExtension.split(separator: "-")
+        return Int(components.last ?? "") ?? -1
     }
     
-    group.orderRegions()
+    var drum: String {
+        let components = file.nameExcludingExtension.split(separator: "-")
+        return String(components.first ?? "")
+
+    }
+    
+    var velocity: Int = 0
+    
+    var mic: String {
+        return ""
+    }
+    
+    private var analyzedVolume: Float? = nil
+    var volume: Float {
+        //print("debug: analyzing volume")
+        if let _volume = analyzedVolume {
+            return _volume
+        }
+        
+        let url = URL(fileURLWithPath: file.path)
+        if let audioFile = try? AVAudioFile(forReading: url) {
+            analyzedVolume = audioFile.peak?.amplitude ?? -1.0
+            return analyzedVolume ?? -1.0
+        }
+        return -2.0
+    }
+    
+    var scaledVolume: Float = 0.0
+    
+    init(file: File) {
+        self.file = file
+    }
+     
+    var codes = [OpCode]()
+     
+     
 }
+
+class Hit {
+    var sampleNumber: Int = -1
+    var samples = [Sample]()
+    var volume: Float = -1
+}
+
+class Mic {
+    var folder: Folder?
+    var samples = [Sample]()
+}
+ 
+class Drum {
+    var note: Note?
+    var hits = [Int: Hit]()
+ }
+
+var hits = [Int: Hit]()
+var mics = [Mic]()
+
+ 
+for subfolder in folder.subfolders {
+    let mic = Mic()
+    mic.folder = folder
+    mics.append(mic)
+    //print("found a new mic~~~~~~")
+    for file in subfolder.files {
+        let sample = Sample(file: file) 
+        mic.samples.append(sample)
+        if let hit = hits[sample.number] {
+            //print("matching a hit: \(sample.number)")
+            hit.samples.append(sample)
+        } else {
+            let hit = Hit()
+            //print("found a new hit: \(sample.number)")
+            hit.sampleNumber = sample.number
+            hit.samples.append(sample)
+            hits[sample.number] = hit
+        }
+    }
+    //print("number of hits: ", hits.values.count)
+}
+
+// scale volumes
+for mic in mics {
+    var min: Float = MAXFLOAT
+    var max: Float = 0.0
+    for sample in mic.samples {
+        let volume = sample.volume
+        if volume < min { min = volume }
+        if volume > max { max = volume }
+    }
+    
+    for sample in mic.samples {
+        sample.scaledVolume = ( sample.volume - min ) / (max - min)
+    }
+}
+
+for hit in hits.values {
+    var sum: Float = 0.0
+    for sample in hit.samples {
+        sum = sum + sample.scaledVolume
+    }
+    hit.volume = sum / Float(hit.samples.count)
+}
+
+for (i, hit) in hits.values.sorted(by: { $0.volume < $1.volume } ).enumerated() {
+    let ratio: Float = Float(i+1) / Float(hits.values.count)
+    let velocity = ratio * 127
+    for sample in hit.samples {
+        sample.velocity = Int(round(velocity))
+    }
+}
+
+// now lets sort all of the mics based on their new velocities
+for mic in mics {
+    mic.samples = mic.samples.sorted(by: { $0.velocity < $1.velocity })
+}
+
+if let mic = mics.first {
+    for sample in mic.samples {
+        print(sample.velocity)
+    }
+}
+/*
+drums:
+produces 3 files, one for each mic
+ 
+<group> round robbin for velocity = 1, note = c 
+    region seq 1
+    region seq 2
+ 
+ 
+ */
+
+
+// choose the
+
+
 //
 //let output = try folder.createFile(named: "files.sfz")
 //try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")

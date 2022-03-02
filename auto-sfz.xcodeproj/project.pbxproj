@@ -63,6 +63,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02157F8427CF048200D7E126 /* audiokit */ = {
+			isa = PBXGroup;
+			children = (
+				02586AD527CEF895004F70AC /* AudioKitHelpers.swift */,
+				02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */,
+				02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */,
+				02586AC727CEF5B1004F70AC /* FormatConverter.swift */,
+				02586AC927CEF5B1004F70AC /* FormatConverter+Compressed.swift */,
+				02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */,
+				02586ACA27CEF5B1004F70AC /* FormatConverter+Utilities.swift */,
+				02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */,
+			);
+			path = audiokit;
+			sourceTree = "<group>";
+		};
 		FD8A47B32400443700842213 = {
 			isa = PBXGroup;
 			children = (
@@ -82,14 +97,7 @@
 		FD8A47BE2400443700842213 /* auto-sfz */ = {
 			isa = PBXGroup;
 			children = (
-				02586AD527CEF895004F70AC /* AudioKitHelpers.swift */,
-				02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */,
-				02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */,
-				02586AC727CEF5B1004F70AC /* FormatConverter.swift */,
-				02586AC927CEF5B1004F70AC /* FormatConverter+Compressed.swift */,
-				02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */,
-				02586ACA27CEF5B1004F70AC /* FormatConverter+Utilities.swift */,
-				02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */,
+				02157F8427CF048200D7E126 /* audiokit */,
 				02586AC427CEF131004F70AC /* auto-sfz.entitlements */,
 				FD8A47BF2400443700842213 /* main.swift */,
 				FD0B47C024019BF200AA607F /* Note.swift */,

@@ -38,7 +38,8 @@ extension AVAudioFile {
             try read(into: buffer)
             //Log("Created buffer with format", processingFormat)
 
-        } catch let error as NSError {
+        }
+        catch _ as NSError {
             //Log("Cannot read into buffer " + error.localizedDescription, log: OSLog.fileHandling, type: .error)
         }
 
@@ -126,9 +127,9 @@ extension AVAudioFile {
         let converter = FormatConverter(inputURL: tempFile, outputURL: outputURL, options: options)
         converter.start { error in
 
-            if let error = error {
-                //Log("Done, error", error, type: .error)
-            }
+//            if let error = error {
+//                //Log("Done, error", error, type: .error)
+//            }
 
             completionHandler?(error)
 

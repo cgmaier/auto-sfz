@@ -6,7 +6,20 @@
 //  Copyright © 2020 Chris Maier. All rights reserved.
 //
  
+
 enum Note {
+    static func drum(input: String) -> Note? {
+        switch input {
+        case "snare": return D(1)
+        case "floor": return F(1)
+        case "kick": return C(1)
+        case "ride": return C_sharp(2)
+        case "crash": return D_sharp(2)
+        case "hi": return F_sharp(1)
+        default: return C(100)
+        }
+    }
+    
     static func note(input: String) -> Note? { 
         var iterator: String = input
         guard let first = iterator.first else { return nil }

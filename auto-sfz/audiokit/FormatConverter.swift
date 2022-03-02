@@ -229,7 +229,7 @@ extension FormatConverter {
         do {
             //Log("Deleting on error", outputURL.path)
             try FileManager.default.removeItem(at: outputURL)
-        } catch let err as NSError {
+        } catch _ as NSError {
             //Log("Failed to remove file", outputURL, err)
         }
 

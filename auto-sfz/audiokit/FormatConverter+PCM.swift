@@ -93,7 +93,7 @@ extension FormatConverter {
             do {
                 try FileManager.default.copyItem(at: inputURL, to: outputURL)
                 completionHandler?(nil)
-            } catch let err as NSError {
+            } catch _ as NSError {
                 //Log(err)
             }
             return
