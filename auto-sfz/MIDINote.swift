@@ -8,7 +8,7 @@
  
 
 enum MIDINote {
-    static func note(drum: String) -> MIDINote? {
+    static func note(drum: String) -> MIDINote {
         switch drum {
         case "snare": return D(1)
         case "floor": return F(1)

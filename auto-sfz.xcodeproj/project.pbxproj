@@ -15,6 +15,7 @@
 		02586AD027CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */; };
 		02586AD327CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */; };
 		02586AD627CEF895004F70AC /* AudioKitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD527CEF895004F70AC /* AudioKitHelpers.swift */; };
+		02708E3327D07F040045A414 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02708E3227D07F040045A414 /* Model.swift */; };
 		FD0B47C124019BF200AA607F /* MIDINote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C024019BF200AA607F /* MIDINote.swift */; };
 		FD0B47C324019C3500AA607F /* OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C224019C3500AA607F /* OpCode.swift */; };
 		FD8A47C02400443700842213 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A47BF2400443700842213 /* main.swift */; };
@@ -43,6 +44,7 @@
 		02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Utilities.swift"; sourceTree = "<group>"; };
 		02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Processing.swift"; sourceTree = "<group>"; };
 		02586AD527CEF895004F70AC /* AudioKitHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKitHelpers.swift; sourceTree = "<group>"; };
+		02708E3227D07F040045A414 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FD0B47C024019BF200AA607F /* MIDINote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDINote.swift; sourceTree = "<group>"; };
 		FD0B47C224019C3500AA607F /* OpCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpCode.swift; sourceTree = "<group>"; };
 		FD8A47BC2400443700842213 /* auto-sfz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "auto-sfz"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +100,7 @@
 				02157F8427CF048200D7E126 /* audiokit */,
 				02586AC427CEF131004F70AC /* auto-sfz.entitlements */,
 				FD8A47BF2400443700842213 /* main.swift */,
+				02708E3227D07F040045A414 /* Model.swift */,
 				FD0B47C024019BF200AA607F /* MIDINote.swift */,
 				FD0B47C224019C3500AA607F /* OpCode.swift */,
 			);
@@ -171,6 +174,7 @@
 				02586ACE27CEF5B1004F70AC /* FormatConverter+Compressed.swift in Sources */,
 				FD8A47C02400443700842213 /* main.swift in Sources */,
 				02586AD027CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift in Sources */,
+				02708E3327D07F040045A414 /* Model.swift in Sources */,
 				02586ACC27CEF5B1004F70AC /* FormatConverter.swift in Sources */,
 				02586ACF27CEF5B1004F70AC /* FormatConverter+Utilities.swift in Sources */,
 				02586AC627CEF574004F70AC /* AVAudioFile+Utilities.swift in Sources */,
