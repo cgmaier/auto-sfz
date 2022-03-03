@@ -33,10 +33,11 @@ parseFolders()
 func parseFolders() {
     for subfolder in folder.subfolders {
         let mic = Mic()
-        mic.folder = folder
-        mic.id = folder.name
+        mic.folder = subfolder
+        mic.id = subfolder.name
         mics.append(mic)
-        
+        print("mic id \(mic.id)")
+
         for file in subfolder.files {
             print("new file \(file.name)")
             let sample = Sample(file: file)
@@ -73,13 +74,7 @@ func parseFolders() {
         }
     }
 }
-
-//print("found \(notes.values.count) notes")
-//for (i,note) in notes.values.enumerated() {
-//    print("found \(note.hits.count) hits for note \(note.id) ")
-//}
-//  
-
+ 
 // analyze the sample volumes
 for mic in mics {
     for sampleArray in mic.samples.values {
@@ -154,9 +149,9 @@ for note in notes.values {
 // create a new .sfz file for each microphone
  
 for mic in mics {
-    guard let folder = mic.folder else { continue }
-    let output = try folder.createFile(named: folder.name + ".sfz")
-    try output.write("//// Instrument defined by folder: \(mic.folder?.name ?? "")\n\n\n")
+    guard let parent = mic.folder?.parent, let folder = mic.folder else { continue }
+    let output = try parent.createFile(named: folder.name + ".sfz")
+    try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")
     for note in notes.values {
         for layer in note.velocityLayers  {
             let header = layer.header(micID: mic.id)
@@ -169,3 +164,4 @@ for mic in mics {
 
 
 
+exit(1)

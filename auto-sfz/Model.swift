@@ -120,24 +120,21 @@ class VelocityLayer {
         header.type = .group
         
         // codes
-        var codes = header.opcodes
-        codes.append(.pitch_keycenter(note.number))
-        codes.append(.seq_length(hits.count))
-        codes.append(.lovel(vel_low))
-        codes.append(.hivel(vel_high))
+        header.opcodes.append(.pitch_keycenter(note.number))
+        header.opcodes.append(.seq_length(hits.count))
+        header.opcodes.append(.lovel(vel_low))
+        header.opcodes.append(.hivel(vel_high))
         
         // any subheaders
         
         for (i, hit) in hits.enumerated() {
             let subheader = Header()
             header.subheaders.append(subheader)
-            
-            var codes = subheader.opcodes
             subheader.type = .region
-            codes.append(.seq_position(i))
+            subheader.opcodes.append(.seq_position(i))
             let sample = hit.samples[micID]
             let filename = sample!.file.parent!.name + "/" + sample!.file.name
-            codes.append(OpCode.sample(filename))
+            subheader.opcodes.append(OpCode.sample(filename))
         }
         
         return header
