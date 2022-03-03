@@ -7,9 +7,9 @@
 //
  
 
-enum Note {
-    static func drum(input: String) -> Note? {
-        switch input {
+enum MIDINote {
+    static func note(drum: String) -> MIDINote? {
+        switch drum {
         case "snare": return D(1)
         case "floor": return F(1)
         case "kick": return C(1)
@@ -20,7 +20,7 @@ enum Note {
         }
     }
     
-    static func note(input: String) -> Note? { 
+    static func note(input: String) -> MIDINote? { 
         var iterator: String = input
         guard let first = iterator.first else { return nil }
         var noteName: String = String(first)

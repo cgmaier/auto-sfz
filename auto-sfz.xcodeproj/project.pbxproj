@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02586AC127CEE2A6004F70AC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC027CEE2A6004F70AC /* Model.swift */; };
 		02586AC627CEF574004F70AC /* AVAudioFile+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */; };
 		02586ACC27CEF5B1004F70AC /* FormatConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC727CEF5B1004F70AC /* FormatConverter.swift */; };
 		02586ACD27CEF5B1004F70AC /* FormatConverter+PCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AC827CEF5B1004F70AC /* FormatConverter+PCM.swift */; };
@@ -16,7 +15,7 @@
 		02586AD027CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */; };
 		02586AD327CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */; };
 		02586AD627CEF895004F70AC /* AudioKitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02586AD527CEF895004F70AC /* AudioKitHelpers.swift */; };
-		FD0B47C124019BF200AA607F /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C024019BF200AA607F /* Note.swift */; };
+		FD0B47C124019BF200AA607F /* MIDINote.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C024019BF200AA607F /* MIDINote.swift */; };
 		FD0B47C324019C3500AA607F /* OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0B47C224019C3500AA607F /* OpCode.swift */; };
 		FD8A47C02400443700842213 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A47BF2400443700842213 /* main.swift */; };
 		FD8A47C82400472B00842213 /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = FD8A47C72400472B00842213 /* Files */; };
@@ -35,7 +34,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02586AC027CEE2A6004F70AC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		02586AC427CEF131004F70AC /* auto-sfz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "auto-sfz.entitlements"; sourceTree = "<group>"; };
 		02586AC527CEF574004F70AC /* AVAudioFile+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+Utilities.swift"; sourceTree = "<group>"; };
 		02586AC727CEF5B1004F70AC /* FormatConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatConverter.swift; sourceTree = "<group>"; };
@@ -45,7 +43,7 @@
 		02586ACB27CEF5B1004F70AC /* AVAudioPCMBuffer+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Utilities.swift"; sourceTree = "<group>"; };
 		02586AD127CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Processing.swift"; sourceTree = "<group>"; };
 		02586AD527CEF895004F70AC /* AudioKitHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKitHelpers.swift; sourceTree = "<group>"; };
-		FD0B47C024019BF200AA607F /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		FD0B47C024019BF200AA607F /* MIDINote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDINote.swift; sourceTree = "<group>"; };
 		FD0B47C224019C3500AA607F /* OpCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpCode.swift; sourceTree = "<group>"; };
 		FD8A47BC2400443700842213 /* auto-sfz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "auto-sfz"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD8A47BF2400443700842213 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -100,8 +98,7 @@
 				02157F8427CF048200D7E126 /* audiokit */,
 				02586AC427CEF131004F70AC /* auto-sfz.entitlements */,
 				FD8A47BF2400443700842213 /* main.swift */,
-				FD0B47C024019BF200AA607F /* Note.swift */,
-				02586AC027CEE2A6004F70AC /* Model.swift */,
+				FD0B47C024019BF200AA607F /* MIDINote.swift */,
 				FD0B47C224019C3500AA607F /* OpCode.swift */,
 			);
 			path = "auto-sfz";
@@ -179,10 +176,9 @@
 				02586AC627CEF574004F70AC /* AVAudioFile+Utilities.swift in Sources */,
 				FD0B47C324019C3500AA607F /* OpCode.swift in Sources */,
 				02586ACD27CEF5B1004F70AC /* FormatConverter+PCM.swift in Sources */,
-				FD0B47C124019BF200AA607F /* Note.swift in Sources */,
+				FD0B47C124019BF200AA607F /* MIDINote.swift in Sources */,
 				02586AD627CEF895004F70AC /* AudioKitHelpers.swift in Sources */,
 				02586AD327CEF6D6004F70AC /* AVAudioPCMBuffer+Processing.swift in Sources */,
-				02586AC127CEE2A6004F70AC /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

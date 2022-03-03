@@ -39,7 +39,7 @@ class Region {
     var key: Int {
         let components = file.name.split(separator: "_")
         for component in components {
-            if let note = Note.note(input: String(component)) {
+            if let note = MIDINote.note(input: String(component)) {
                 return note.number
             }
         }
@@ -73,7 +73,6 @@ extension Region: Entry {
 
 var debug = true
 var rootPath = "/Users/christophermaier/Dropbox/leftovers/drum-sampling/samples-raw-v1/snare"
-
 if !debug {
     print("Enter the root folder path:")
     guard let input = readLine(strippingNewline: true) else {
@@ -82,34 +81,28 @@ if !debug {
     }
     rootPath = input.trimmingCharacters(in: .whitespacesAndNewlines)
 }
-
 let folder = try Folder(path: rootPath)
+parseFolders()
+
+
 var groups = [Group]()
 
 // represents a region
 class Sample {
     var file: File
     
-    var number: Int {
+    var hitID: HitID {
         let components = file.nameExcludingExtension.split(separator: "-")
         return Int(components.last ?? "") ?? -1
     }
     
-    var drum: String {
+    var noteID: String {
         let components = file.nameExcludingExtension.split(separator: "-")
         return String(components.first ?? "")
-
-    }
-    
-    var velocity: Int = 0
-    
-    var mic: String {
-        return ""
     }
     
     private var analyzedVolume: Float? = nil
     var volume: Float {
-        //print("debug: analyzing volume")
         if let _volume = analyzedVolume {
             return _volume
         }
@@ -127,121 +120,169 @@ class Sample {
     init(file: File) {
         self.file = file
     }
-     
-    var codes = [OpCode]()
-     
-     
+}
+ 
+class Note {
+    var hits = [Int: Hit]()
+    var noteID: NoteID = ""
+    var velocityLayers = [VelocityLayer]()
 }
 
 class Hit {
-    var sampleNumber: Int = -1
-    var samples = [Sample]()
+    var noteID: NoteID {
+        return samples.values.first?.noteID ?? ""
+    }
+    var hitID: HitID {
+        return samples.values.first?.hitID ?? -1
+    }
+    var samples = [MicID: Sample]()
     var volume: Float = -1
+    var velocity: Int = 0
 }
 
 class Mic {
+    var id: String = ""
     var folder: Folder?
-    var samples = [Sample]()
+    var samples = [NoteID: [Sample]]()
 }
- 
-class Drum {
-    var note: Note?
-    var hits = [Int: Hit]()
- }
 
-var hits = [Int: Hit]()
+typealias NoteID = String
+typealias MicID = String
+typealias HitID = Int
+
+ 
+var notes = [NoteID: Note]()
 var mics = [Mic]()
 
- 
-for subfolder in folder.subfolders {
-    let mic = Mic()
-    mic.folder = folder
-    mics.append(mic)
-    //print("found a new mic~~~~~~")
-    for file in subfolder.files {
-        let sample = Sample(file: file) 
-        mic.samples.append(sample)
-        if let hit = hits[sample.number] {
-            //print("matching a hit: \(sample.number)")
-            hit.samples.append(sample)
-        } else {
-            let hit = Hit()
-            //print("found a new hit: \(sample.number)")
-            hit.sampleNumber = sample.number
-            hit.samples.append(sample)
-            hits[sample.number] = hit
+// creates both the notes/hits and mics structures
+func parseFolders() {
+    for subfolder in folder.subfolders {
+        let mic = Mic()
+        mic.folder = folder
+        mic.id = folder.name
+        mics.append(mic)
+        
+        for file in subfolder.files {
+            let sample = Sample(file: file)
+      
+            let noteID = sample.noteID
+            // check if we already have the note for the microphone
+            if mic.samples[noteID] == nil {
+                // create a new array of samples for the note
+                mic.samples[noteID] = [Sample]()
+            }
+            // add the new sample to the array
+            mic.samples[noteID]?.append(sample)
+            
+            // now check if we have the note covered in drums, perhaps by another microphone already parsed
+            let note = notes[noteID] ?? Note()
+            note.noteID = sample.noteID
+             
+            // now see if we already have a hit (corresponding to the sample number) for this sample
+            if let hit = note.hits[sample.hitID] {
+                hit.samples[mic.id] = sample
+
+            } else {
+                let hit = Hit()
+                hit.samples[mic.id] = sample
+                note.hits[sample.hitID] = hit
+            }
         }
     }
-    //print("number of hits: ", hits.values.count)
+}
+ 
+// analyze the sample volumes
+for mic in mics {
+    for sampleArray in mic.samples.values {
+        var min: Float = MAXFLOAT
+        var max: Float = 0.0
+        
+        for sample in sampleArray {
+            // analyze the volume
+            let volume = sample.volume
+            if volume < min { min = volume }
+            if volume > max { max = volume }
+        }
+         
+        for sample in sampleArray {
+            sample.scaledVolume = ( sample.volume - min ) / (max - min)
+        }
+    }
 }
 
-// scale volumes
-for mic in mics {
-    var min: Float = MAXFLOAT
-    var max: Float = 0.0
-    for sample in mic.samples {
-        let volume = sample.volume
-        if volume < min { min = volume }
-        if volume > max { max = volume }
+for note in notes.values { 
+    // now apply the analysis to the the hits construct
+    for hit in note.hits.values {
+        var sum: Float = 0.0
+        for sample in hit.samples.values {
+            sum = sum + sample.scaledVolume
+        }
+        hit.volume = sum / Float(hit.samples.count)
     }
     
-    for sample in mic.samples {
-        sample.scaledVolume = ( sample.volume - min ) / (max - min)
+    //define a velocity for each hit
+    for (i, hit) in note.hits.values.sorted(by: { $0.volume < $1.volume } ).enumerated() {
+        let ratio: Float = Float(i+1) / Float(note.hits.values.count)
+        let velocity = ratio * 127
+        hit.velocity = Int(round(velocity))
     }
+     
+
+}
+  
+
+class VelocityLayer {
+    var note: MIDINote?
+    var vel_low: Int?
+    var vel_high: Int?
+    var hits = [Hit]()
 }
 
-for hit in hits.values {
-    var sum: Float = 0.0
-    for sample in hit.samples {
-        sum = sum + sample.scaledVolume
+// using the hit info, we can construct velocity layers
+for note in notes.values {
+    // sort the hits
+    let hits = note.hits.values.sorted(by: { $0.velocity < $1.velocity } )
+    
+    var prevVelocity = 0
+    var velocityLayer = VelocityLayer()
+    for hit in hits {
+        
+        
+        note.velocityLayers.append(velocityLayer)
+        
     }
-    hit.volume = sum / Float(hit.samples.count)
+    
+    
+    
+    velocityLayer.note = MIDINote.note(drum: note.noteID)
+     
 }
 
-for (i, hit) in hits.values.sorted(by: { $0.volume < $1.volume } ).enumerated() {
-    let ratio: Float = Float(i+1) / Float(hits.values.count)
-    let velocity = ratio * 127
-    for sample in hit.samples {
-        sample.velocity = Int(round(velocity))
-    }
-}
-
-// now lets sort all of the mics based on their new velocities
+ 
+ 
+// create a new .sfz file for each microphone
+ 
 for mic in mics {
-    mic.samples = mic.samples.sorted(by: { $0.velocity < $1.velocity })
+    guard let folder = mic.folder else { continue }
+    let output = try folder.createFile(named: folder.name + ".sfz")
+    try output.write("//// Instrument defined by folder: \(mic.folder?.name ?? "")\n\n\n")
+    for note in mic.samples.keys {
+        
+        //create a group for each velocity
+        
+        
+    }
+    
 }
-
-if let mic = mics.first {
-    for sample in mic.samples {
-        print(sample.velocity)
+ 
+ 
+for group in groups {
+    try output.append("\n\n\n//// Group defined by subfolder: \(group.folder!.name)\n")
+    try output.append(group.string)
+    for region in group.regions {
+        try output.append(region.string)
     }
 }
-/*
-drums:
-produces 3 files, one for each mic
- 
-<group> round robbin for velocity = 1, note = c 
-    region seq 1
-    region seq 2
- 
- 
- */
-
-
-// choose the
-
-
-//
-//let output = try folder.createFile(named: "files.sfz")
-//try output.write("//// Instrument defined by folder: \(folder.name)\n\n\n")
-//// output to the file
-//for group in groups {
-//    try output.append("\n\n\n//// Group defined by subfolder: \(group.folder!.name)\n")
-//    try output.append(group.string)
-//    for region in group.regions {
-//        try output.append(region.string)
-//    }
-//}
 
 exit(1)
 
